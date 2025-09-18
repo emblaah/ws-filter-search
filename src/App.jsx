@@ -21,8 +21,8 @@ import {
 function App() {
   const [filter, setFilter] = useState("");
   const [onlyStock, setOnlyStock] = useState(false);
-  const [sortNameDir, setSortNameDir] = useState("asc");
-  const [sortPriceDir, setSortPriceDir] = useState("ascending");
+  const [sortNameDir, setSortNameDir] = useState("regular");
+  const [sortPriceDir, setSortPriceDir] = useState("regular");
 
   const runTests = () => {
     console.clear();
@@ -90,12 +90,13 @@ function App() {
     filtered = filtered.filter((p) => p.inStock);
   }
   // 3. Sortera produkter med asc/desc - använd sortByName
+  if (sortNameDir !== "regular") {
+    filtered = sortByName(filtered, sortNameDir);
+  }
 
-  filtered = sortByName(filtered, sortNameDir);
-  filtered = sortByPrice(filtered, sortPriceDir);
-
-  console.log("sortname", sortNameDir);
-  console.log("sortprice", sortPriceDir);
+  if (sortPriceDir !== "regular") {
+    filtered = sortByPrice(filtered, sortPriceDir);
+  }
 
   return (
     <div style={{ padding: "2rem", fontFamily: "sans-serif" }}>
@@ -118,12 +119,14 @@ function App() {
         <select
           value={sortNameDir}
           onChange={(e) => setSortNameDir(e.target.value)}>
+          <option value="regular">Namn (standard)</option>
           <option value="asc">Namn ↑</option>
           <option value="desc">Namn ↓</option>
         </select>
         <select
           value={sortPriceDir}
           onChange={(e) => setSortPriceDir(e.target.value)}>
+          <option value="regular">Pris (standard)</option>
           <option value="ascending">Pris ↑</option>
           <option value="descending">Pris ↓</option>
         </select>

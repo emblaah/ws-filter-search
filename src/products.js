@@ -38,7 +38,7 @@ export const products = Object.freeze([
     id: 6,
     name: "TS Handbook (Paperback)",
     price: 279,
-    inStock: false,
+    inStock: true,
     tags: ["book", "typescript"],
   },
 ]);
